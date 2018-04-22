@@ -63,6 +63,10 @@ void readSensors() {
   }
 
   brightness = (int)(100 - (analogRead(PIN_LDR_Sensor) * 100 / 1024));
+
+  Serial.println("BRIGHTNESS: " + (String)brightness + " %");
+  Serial.println("TEMPERATURE: " + (String)temperature + " 'C");
+  Serial.println("HUMIDITY: " + (String)humidity + " %");
 }
 
 void displaySensors() {
@@ -83,14 +87,6 @@ void displaySensors() {
   display.display();
 }
 
-void readSensorsLoop() {
-  readSensors();
-  Serial.println("");
-  Serial.println("BRIGHTNESS: " + (String)brightness + " %");
-  Serial.println("TEMPERATURE: " + (String)temperature + " 'C");
-  Serial.println("HUMIDITY: " + (String)humidity + " %");
-}
-
 void setup() {
   Serial.begin(9600);
   Serial.println("");
@@ -106,10 +102,10 @@ void setup() {
   // LED_BUILTIN ON
   digitalWrite(LED_BUILTIN, LOW);
 
-  Serial.println("splashscreen()");
+  readSensors();
   splashscreen();
 
-  delay(1000);
+  delay(500);
 
   // LED_BUILTIN OFF
   digitalWrite(LED_BUILTIN, HIGH);
@@ -118,7 +114,7 @@ void setup() {
 }
 
 void loop() {
-  readSensorsLoop();
+  readSensors();
   displaySensors();
   delay(1000);
 }
